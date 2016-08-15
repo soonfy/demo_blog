@@ -4,14 +4,19 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose')            //connect mongodb
+var session = require('express-session')
+var mongoStore = require('connect-mongo')(session)        //insert session to mongodb
+
 
 /**
- * remove
+ * remove route
  */
 // var routes = require('./routes/index');
 // var users = require('./routes/users');
+
 /**
- * insert
+ * insert route
  */
 var routes = require('./routes/index')
 
@@ -39,6 +44,20 @@ app.use(express.static(path.join(__dirname, 'public')));
  * insert
  */
 routes(app)
+
+//connect mongodb
+var dburl = 'mongodb://localhost/demo_blog'
+mongoose.connect(dburl)
+
+
+//insert session to mongodb
+app.use(session({
+  secret: 'blog_user',
+  store: new mongoStore({
+    url: dburl,
+    collections: 'sessions'
+  })
+}))
 
 
 // catch 404 and forward to error handler
