@@ -1,0 +1,7 @@
+<%- include header %>
+<p class="info">
+  author: <a href="/u/<%= post.name %>"><%= post.name %></a> | 
+  date: <%= moment(post.createdAt).format('YYYY-MM-DD HH-mm-ss') %>
+</p>
+<p><%- post.content %></p>
+<%- include footer %>

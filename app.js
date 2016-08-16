@@ -4,10 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
+//study
 var mongoose = require('mongoose')            //connect mongodb
 var session = require('express-session')
 var mongoStore = require('connect-mongo')(session)        //insert session to mongodb
 var flash = require('connect-flash')          //store info in session
+var multer = require('multer')                //upload pic
 
 
 /**
@@ -45,6 +48,17 @@ app.locals.moment = require('moment')             //import date format
 var dburl = 'mongodb://localhost/demo_blog'
 mongoose.connect(dburl)
 
+//pic upload module, v1.1.0 alter
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/upload')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+var upload = multer({storage: storage}).any()
+app.use(upload)
 
 //insert session to mongodb
 //session config before route config

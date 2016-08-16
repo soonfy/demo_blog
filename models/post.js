@@ -6,7 +6,8 @@ var SchemaPost = new Schema({
   name: String,
   title: String,
   content: String,
-  createdAt: Date
+  createdAt: Date,
+  date: String
 })
 
 module.exports = mongoose.model('post', SchemaPost)
