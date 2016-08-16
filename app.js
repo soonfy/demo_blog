@@ -36,7 +36,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(express.static(path.join(__dirname, 'public')));      //import public path
+app.use(express.static(path.join(__dirname, 'node_modules')))   //import node_modules path
+app.locals.moment = require('moment')             //import date format
 
 //connect mongodb
 var dburl = 'mongodb://localhost/demo_blog'

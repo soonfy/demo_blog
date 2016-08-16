@@ -3,7 +3,8 @@ var router = express.Router();
 
 var crypto = require('crypto')        //核心模块，加密
 
-var User = require('../models/user')
+var User = require('../models/user')    //user collection
+var Post = require('../models/post')    //post collection
 
 /**
  * remove
@@ -39,11 +40,24 @@ var checkNotLogin = function (req, res, next) {
 
 module.exports = function (app) {
   app.get('/', function (req, res) {
-    res.render('index', {
-      title: 'homepage',
-      user: req.session.user,
-      success: req.flash('success').toString(),
-      error: req.flash('error').toString()
+    var name = req.session.user.name
+    console.log(name);
+    Post.find({name: name}, {name: 1, title: 1, content: 1, createdAt: 1}, function (err, result) {
+      console.log(result);
+      if(err){
+        posts = []
+        req.flash('error', err)
+        res.redirect('/')
+      }else{
+        posts = result
+      }
+      res.render('index', {
+        title: 'homepage',
+        user: req.session.user,
+        success: req.flash('success').toString(),
+        error: req.flash('error').toString(),
+        posts: posts
+      })
     })
   })
 
@@ -137,7 +151,22 @@ module.exports = function (app) {
   })
   app.post('/post', checkLogin)
   app.post('/post', function (req, res) {
-    
+    var user = req.session.user,
+      post = new Post({
+        name: user.name,
+        title: req.body.title,
+        content: req.body.content,
+        createdAt: Date.now()
+      })
+    post.save(function (err) {
+      if(err){
+        req.flash('error', err)
+        res.redirect('/post')
+      }else{
+        req.flash('success', 'content post success.')
+        res.redirect('/')
+      }
+    })
   })
 
   app.get('/logout', checkLogin)
