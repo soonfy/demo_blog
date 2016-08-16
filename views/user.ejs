@@ -2,7 +2,7 @@
 <% posts.forEach(function(post, index){ %>
 <p><h2><a href="/u/<%= post.name %>/<%= moment(post.createdAt).format('YYYYMMDD') %>/<%= post.title %>"><%= post.title %></a></h2></p>
 <p class="info">
-  date: <%= moment(post.createdAt).format('YYYY-MM-DD HH-mm-ss') %>
+  date: <%= moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss') %>
 </p>
 <p><%- post.content %></p>
 <% }) %>

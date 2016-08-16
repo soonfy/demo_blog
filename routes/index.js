@@ -259,6 +259,44 @@ module.exports = function (app) {
     })
   })
 
+  app.post('/u/:name/:date/:title', checkLogin)
+  app.post('/u/:name/:date/:title', function (req, res) {
+    console.log(req.body)
+    var name_using = req.session.user.name,
+      name_user = req.params.name,
+      date_user = req.params.date,
+      title_user = req.params.title,
+      comment_name = req.body.name,
+      comment_email = req.body.email,
+      comment_website = req.body.website,
+      comment_content = req.body.content
+      var comment = {
+        comment_name: comment_name,
+        comment_email: comment_email,
+        comment_website: comment_website,
+        comment_content: comment_content,
+        createdAt: Date.now()
+      }
+    Post.findOne({name: name_user, date: date_user, title: title_user}, {comments: 1}, function (err, result) {
+      // console.log(result)
+      if(err){
+        req.flash('error', err)
+        res.redirect('back')
+      }else{
+        result.comments.push(comment)
+        result.save(function (err) {
+          if(err){
+            req.flash('error', err)
+            res.redirect('back')
+          }else{
+            req.flash('success', 'comment success.')
+            res.redirect('back')
+          }
+        })
+      }
+    })
+  })
+
   app.get('/edit/:name/:date/:title', checkLogin)
   app.get('/edit/:name/:date/:title', function (req, res) {
     var name_using = req.session.user.name,

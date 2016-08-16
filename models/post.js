@@ -7,7 +7,11 @@ var SchemaPost = new Schema({
   title: String,
   content: String,
   createdAt: Date,
-  date: String
+  date: String,
+  comments: {
+    type: Array,
+    default: []
+  }
 })
 
 module.exports = mongoose.model('post', SchemaPost)
