@@ -3,7 +3,7 @@
   margin: 0;
 }
 body {
-  width: 600px;
+  width: 1000px;
   margin: 2em auto;
   padding: 0 2em;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -27,13 +27,15 @@ nav{
 }
 nav a{
   display: block;
+  background: url(/images/arrow1.gif) no-repeat center right;
   text-decoration: none;
   padding: 0.7em 1em;
   color: #000000;
 }
 nav a:hover{
-  background-color: #ff0000;
-  color: #f9f9f9;
+  /** background-color: #ff0000;  */
+  background: url(/images/arrow2.gif) no-repeat center right;
+  color: #000000;
   -webkit-transition: color 0.2s linear;
 }
 article{
@@ -49,7 +51,7 @@ article a:hover{
   text-decoration: underline;
 }
 .info{
-  font-size: 14px;
+  font-size: 13px;
 }
 .edit{
   margin: 3px;
@@ -64,4 +66,99 @@ article a:hover{
   background-color: #ff0000;
   color: #ffffff;
   -webkit-transition: color 0.2s linear;
+}
+input{
+  padding-left: 10px; 
+  width:250px;
+	height:25px;
+	border:1px solid #ccc;
+	background:#fff;
+	font-size:13px;
+}
+input.login {
+  display: inline-block;
+  text-align: center;
+  margin: 20px 0;
+	width:107px;
+	height:30px;
+	background:url(/images/login.jpg) no-repeat;
+	border:none;
+	cursor:pointer;
+}
+input.register {
+  display: inline-block;
+  text-align: center;
+  margin: 20px 0;
+	width:107px;
+	height:30px;
+	background:url(/images/register.jpg) no-repeat;
+	border:none;
+	cursor:pointer;
+}
+div.label{
+  font-size:14px;
+	color:#666;
+	text-align:left;
+}
+div.label label{
+  padding: 10px 0 5px 5px;
+  display: block;
+  width: 100px;
+  height: 14px;
+  font-size:14px;
+	color:#666;
+	text-align:left;
+}
+div.status{
+  position: absolute;
+  padding: 5px;
+  bottom: 5px;
+}
+textarea{
+  display: block;
+  padding: 5px 0 5px 5px;
+  line-height: 16px;
+  font-size:14px;
+	color:#666;
+	text-align:left;
+}
+input.post {
+  display: inline-block;
+  text-align: center;
+  margin: 20px 0;
+	width:107px;
+	height:30px;
+	background:url(/images/post.jpg) no-repeat;
+	border:none;
+	cursor:pointer;
+}
+input.upload {
+  display: inline-block;
+  text-align: center;
+  margin: 20px 0;
+	width:107px;
+	height:30px;
+	background:url(/images/upload.jpg) no-repeat;
+	border:none;
+	cursor:pointer;
+}
+input.comment {
+  display: inline-block;
+  text-align: center;
+  margin: 20px 0;
+	width:107px;
+	height:30px;
+	background:url(/images/comment.jpg) no-repeat;
+	border:none;
+	cursor:pointer;
+}
+input.commit {
+  display: inline-block;
+  text-align: center;
+  margin: 20px 0;
+	width:107px;
+	height:30px;
+	background:url(/images/commit.jpg) no-repeat;
+	border:none;
+	cursor:pointer;
 }

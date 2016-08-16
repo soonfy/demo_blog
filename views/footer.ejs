@@ -1,3 +1,8 @@
     </article>
+    <% if(success){ %>
+    <div class="status"><%= success %></div>
+    <% }else if(error){ %>
+    <div class="status"><%= error %></div>
+    <% } %>
   </body>
 </html>

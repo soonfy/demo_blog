@@ -1,7 +1,7 @@
 <%- include header %>
 <form method="POST">
-  name: <input type="text" name="name" value="" /><br />
-  pass: <input type="password" name="pass" value=""><br />
-  <input type="submit" name="login" value="login">
+  <div class="label"><label for="name">name</label><input type="text" id="name" name="name" value="" placeholder="user name" /></div>
+  <div class="label"><label for="pass">pass</label><input type="password" id="pass" name="pass" value="" placeholder="user password" /></div>
+  <input type="submit" class="login" name="login" value="">
 </form>
 <%- include footer %>

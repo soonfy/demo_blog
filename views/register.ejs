@@ -1,9 +1,9 @@
 <%- include header %>
 <form method="POST">
-  name: <input type="text" name="name" value="" /><br />
-  pass: <input type="password" name="pass" value=""><br />
-  pass_repeat: <input type="password" name="pass_repeat" value=""><br />
-  email: <input type="email" name="email" value="" /><br />
-  <input type="submit" name="register" value="register">
+  <div class="label"><label for="name">name</label><input type="text" id="name" name="name" value="" placeholder="user name" /></div>
+  <div class="label"><label for="pass">pass</label><input type="password" id="pass" name="pass" value="" placeholder="user password" /></div>
+  <div class="label"><label for="pass_repeat">pass_repeat</label><input type="password" id="pass_repeat" name="pass_repeat" value="" placeholder="repeat password" /></div>
+  <div class="label"><label for="email">email</label><input type="email" id="email" name="email" value="" placeholder="user email" /></div>
+  <input type="submit" class='register' name="register" value="">
 </form>
 <%- include footer %>

@@ -1,9 +1,7 @@
 <%- include header %>
 <form method="POST">
-  title: <br/>
-  <input type="text" name="title" disabled="disabled" value="<%= post.title %>"><br />
-  content: <br />
-  <textarea rows="20" cols="100" name="content"><%= post.content %></textarea><br />
-  <input type="submit" name="commit" value="commit">
+  <div class="label"><label for="title">title</label><input type="text" id="title" name="title" value="<%= post.title %>" disabled="disabled" /></div>
+  <div class="label"><label for="content">content</label><textarea rows="5" cols="50" id="content" name="content" placeholder="comment content"><%= post.content %></textarea></div>
+  <input type="submit" class="commit" name="commit" value="">
 </form>
 <%- include footer %>
