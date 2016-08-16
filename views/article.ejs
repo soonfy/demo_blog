@@ -1,4 +1,10 @@
 <%- include header %>
+<% if(user.name === post.name){ %>
+<p>
+  <span><a class="edit" href="/edit/<%= post.name %>/<%= moment(post.createdAt).format('YYYYMMDD') %>/<%= post.title %>">edit</a></span>
+  <span><a class="edit" href="/remove/<%= post.name %>/<%= moment(post.createdAt).format('YYYYMMDD') %>/<%= post.title %>">remove</a></span>
+</p>
+<% } %>
 <p class="info">
   author: <a href="/u/<%= post.name %>"><%= post.name %></a> | 
   date: <%= moment(post.createdAt).format('YYYY-MM-DD HH-mm-ss') %>

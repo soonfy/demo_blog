@@ -42,26 +42,36 @@ var checkNotLogin = function (req, res, next) {
 
 module.exports = function (app) {
   app.get('/', function (req, res) {
-    var name = req.session.user.name,
-      posts = []
-    Post.find({name: name}, {}, function (err, result) {
-      if(err){
-        req.flash('error', err)
-        res.redirect('/')
-      }else{
-        result.forEach(function (post, index) {
-          post.content = markdown.toHTML(post.content)
+    if(req.session.user){
+      var name = req.session.user.name,
+        posts = []
+      Post.find({}, {}, function (err, result) {
+        if(err){
+          req.flash('error', err)
+          res.redirect('/')
+        }else{
+          result.forEach(function (post, index) {
+            post.content = markdown.toHTML(post.content)
+          })
+          posts = result
+        }
+        res.render('index', {
+          title: 'homepage',
+          user: req.session.user,
+          success: req.flash('success').toString(),
+          error: req.flash('error').toString(),
+          posts: posts
         })
-        posts = result
-      }
+      })
+    }else{
       res.render('index', {
         title: 'homepage',
         user: req.session.user,
         success: req.flash('success').toString(),
         error: req.flash('error').toString(),
-        posts: posts
+        posts: []
       })
-    })
+    }
   })
 
   app.get('/register', checkNotLogin)
@@ -199,21 +209,14 @@ module.exports = function (app) {
   app.get('/u/:name', function (req, res) {
     var name_using = req.session.user.name,
       name_user = req.params.name
-    console.log(name_user)
-    console.log(name_using)
-    if(!name_using){
-      req.flash('error', 'user not login.')
-      res.redirect('/login')
-    }
     Post.find({name: name_user}, {}, function (err, result) {
       if(err){
         req.flash('error', err)
         res.redirect('back')
       }else if(!result){
-        req.flash('error', 'user not exits.')
+        req.flash('error', 'article not exits.')
         res.redirect('back')
       }else{
-        console.log(result)
         result.forEach(function (post, index) {
           post.content = markdown.toHTML(post.content)
         })
@@ -235,17 +238,12 @@ module.exports = function (app) {
       name_user = req.params.name,
       date_user = req.params.date,
       title_user = req.params.title
-    if(!name_using){
-      req.flash('error', 'user not login.')
-      res.redirect('/login')
-    }
     Post.findOne({name: name_user, date: date_user, title: title_user}, {}, function (err, result) {
-      console.log(result);
       if(err){
         req.flash('error', err)
         res.redirect('back')
       }else if(!result){
-        req.flash('error', 'user not exits.')
+        req.flash('error', 'article not exits.')
         res.redirect('back')
       }else{
         result.content = markdown.toHTML(result.content)
@@ -260,4 +258,83 @@ module.exports = function (app) {
       }
     })
   })
+
+  app.get('/edit/:name/:date/:title', checkLogin)
+  app.get('/edit/:name/:date/:title', function (req, res) {
+    var name_using = req.session.user.name,
+      name_user = req.params.name,
+      date_user = req.params.date,
+      title_user = req.params.title
+    Post.findOne({name: name_user, date: date_user, title: title_user}, {}, function (err, result) {
+      if(err){
+        req.flash('error', err)
+        res.redirect('back')
+      }else if(!result){
+        req.flash('error', 'article not exits.')
+        res.redirect('back')
+      }else{
+        // result.content = markdown.toHTML(result.content)
+        post = result
+        res.render('edit', {
+          title: 'edit',
+          user: req.session.user,
+          success: req.flash('success').toString(),
+          error: req.flash('error').toString(),
+          post: post
+        })
+      }
+    })
+  })
+
+  app.post('/edit/:name/:date/:title', checkLogin)
+  app.post('/edit/:name/:date/:title', function (req, res) {
+    var name_using = req.session.user.name,
+      name_user = req.params.name,
+      date_user = req.params.date,
+      title_user = req.params.title,
+      content = req.body.content
+      var edit = {
+        content: content,
+        createdAt: Date.now(),
+        date: moment(Date.now()).format('YYYYMMDD')
+      }
+    Post.findOneAndUpdate({name: name_user, date: date_user, title: title_user}, edit, null, function (err, result) {
+      var url = encodeURI('/u/' + name_user + '/' + date_user + '/' + title_user)
+      if(err){
+        req.flash('error', err)
+        res.redirect(url)
+      }else{
+        req.flash('success', 'edit success.')
+        res.redirect(url)
+      }
+    })
+  })
+
+  app.get('/remove/:name/:date/:title', checkLogin)
+  app.get('/remove/:name/:date/:title', function (req, res) {
+    var name_using = req.session.user.name,
+      name_user = req.params.name,
+      date_user = req.params.date,
+      title_user = req.params.title
+    Post.findOne({name: name_user, date: date_user, title: title_user}, {}, function (err, result) {
+      if(err){
+        req.flash('error', err)
+        res.redirect('back')
+      }else if(!result){
+        req.flash('error', 'article not exits.')
+        res.redirect('back')
+      }else{
+        result.remove(function (err) {
+          if(err){
+            req.flash('error', err)
+            res.redirect(url)
+          }else{
+            req.flash('success', 'remove success')
+            res.redirect('/')
+          }
+        })
+      }
+    })
+  })
+
 }
