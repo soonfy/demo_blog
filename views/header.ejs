@@ -9,6 +9,10 @@
   <body>
     <header>
       <h1><%= title %></h1>
+      <span class="search"><form action="/search" method="GET">
+        <input type="text" name="keyword" value="" placeholder="search keyword" />
+        <input type="submit" class="search" value="" />
+      </form></span>
     </header>
     <nav>
       <span><a href="/" title="homepage">home</a></span>

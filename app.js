@@ -11,6 +11,7 @@ var session = require('express-session')
 var mongoStore = require('connect-mongo')(session)        //insert session to mongodb
 var flash = require('connect-flash')          //store info in session
 var multer = require('multer')                //upload pic
+var fs = require('fs')                        //log file
 
 
 /**
@@ -24,6 +25,11 @@ var multer = require('multer')                //upload pic
  */
 var routes = require('./routes/index')
 
+//log file stream, before var app
+var accessLog = fs.createWriteStream('access.log', {flag: 'a'})
+var errorLog = fs.createWriteStream('error.log', {flag: 'a'})
+
+//after log
 var app = express();
 
 // view engine setup
@@ -35,7 +41,12 @@ app.use(flash())
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+//log info
 app.use(logger('dev'));
+//log file
+app.use(logger({stream: accessLog}))
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -75,6 +86,14 @@ app.use(session({
     collections: 'sessions'
   })
 }))
+
+//new error log file
+app.use(function (err, req, res, next) {
+  var user = req.session.user? req.session.user: 'not login user'
+  var meta = '[' + new Date() + '] ' + req.session.user + ' get ' + req.url + ' exits error. \r\n'
+  errorLog.write(meta + err.stack + '\r\n\r\n\r\n')
+  next()
+})
 
 /**
  * remove

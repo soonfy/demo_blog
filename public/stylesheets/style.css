@@ -16,6 +16,10 @@ header{
   padding: 0.5em 0;
   border-bottom: 1px solid #cccccc;
 }
+h1{
+  display: inline-block;
+  width: 500px;
+}
 nav{
   float: left;
   font-family: "Microsoft YaHei";
@@ -74,6 +78,7 @@ input{
 	background:#fff;
 	font-size:13px;
 }
+/** login按钮  */
 input.login {
   display: inline-block;
   text-align: center;
@@ -84,6 +89,7 @@ input.login {
 	border:none;
 	cursor:pointer;
 }
+/** register按钮  */
 input.register {
   display: inline-block;
   text-align: center;
@@ -125,6 +131,7 @@ textarea{
 	color:#666;
 	text-align:left;
 }
+/** post按钮  */
 input.post {
   display: inline-block;
   text-align: center;
@@ -135,6 +142,7 @@ input.post {
 	border:none;
 	cursor:pointer;
 }
+/** upload按钮  */
 input.upload {
   display: inline-block;
   text-align: center;
@@ -145,6 +153,7 @@ input.upload {
 	border:none;
 	cursor:pointer;
 }
+/** comment按钮  */
 input.comment {
   display: inline-block;
   text-align: center;
@@ -155,10 +164,44 @@ input.comment {
 	border:none;
 	cursor:pointer;
 }
+/** commit按钮  */
 input.commit {
   display: inline-block;
   text-align: center;
   margin: 20px 0;
+	width:107px;
+	height:30px;
+	background:url(/images/commit.jpg) no-repeat;
+	border:none;
+	cursor:pointer;
+}
+input.tag{
+  padding-left: 10px; 
+  width:75px;
+	height:25px;
+	border:1px solid #ccc;
+	background:#fff;
+	font-size:13px;
+}
+span.search{
+  float: right;
+  width: 350px;
+}
+span.search input{
+  float: left;
+  padding-left: 10px;
+  margin-left: 10px;
+  width:200px;
+	height:30px;
+	border:1px solid #ccc;
+	background:#fff;
+	font-size:13px;
+}
+/** search按钮  */
+span.search input.search {
+  float: left;
+  text-align: center;
+  margin-left: 5px;
 	width:107px;
 	height:30px;
 	background:url(/images/commit.jpg) no-repeat;

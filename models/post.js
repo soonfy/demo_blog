@@ -11,7 +11,12 @@ var SchemaPost = new Schema({
   comments: {
     type: Array,
     default: []
-  }
+  },
+  tags: {
+    type: Array,
+    default: []
+  },
+  pageviewer: Number
 })
 
 module.exports = mongoose.model('post', SchemaPost)

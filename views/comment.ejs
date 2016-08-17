@@ -10,7 +10,7 @@
   <% if(user){ %>
   <div class="label"><label for="name">name</label><input type="text" id="name" name="name" value="<%= user.name %>" /></div>
   <div class="label"><label for="email">email</label><input type="email" id="email" name="email" value="<%= user.email %>" /></div>
-  <div class="label"><label for="website">name</label><input type="text" id="website" name="website" value="/u/<%= user.name %>" /></div>
+  <div class="label"><label for="website">website</label><input type="text" id="website" name="website" value="/u/<%= user.name %>" /></div>
   <% } %>
   <div class="label"><label for="content">content</label><textarea rows="5" cols="50" id="content" name="content" placeholder="comment content"></textarea></div>
   <input type="submit" class="comment" name="comment" value="" />

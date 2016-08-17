@@ -1,6 +1,12 @@
 <%- include header %>
 <form method="POST">
   <div class="label"><label for="title">title</label><input type="text" id="title" name="title" value="" placeholder="post title" /></div>
+  <div class="label">
+    <label class="tag">tag</label>
+    <input type="text" class="tag" name="tag1" value="" placeholder="post tag" />
+    <input type="text" class="tag" name="tag2" value="" placeholder="post tag" />
+    <input type="text" class="tag" name="tag3" value="" placeholder="post tag" />
+  </div>
   <div class="label"><label for="content">content</label><textarea id="content" rows="5" cols="50" name="content" placeholder="post content"></textarea>
   <input type="submit" class="post" name="post" value="" />
 </form>

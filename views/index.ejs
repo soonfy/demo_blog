@@ -4,7 +4,15 @@
 <p class="info">
   author: <a href="/u/<%= post.name %>"><%= post.name %></a> | 
   date: <%= moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss') %>
+  tags: 
+  <% post.tags.forEach(function(tag, index){ %>
+    <% if(tag){ %>
+      <a class="tag" href="/tags/<%= tag %>"><%= tag %></a>
+    <% } %>
+  <% }) %>
 </p>
 <p><%- post.content %></p>
+<p><span>pv: </span><span><%= post.pageviewer %></span><span>pc: </span><span><%= post.comments.length %></span></p>
 <% }) %>
+<%- include page %>
 <%- include footer %>

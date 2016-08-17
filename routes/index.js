@@ -34,27 +34,37 @@ module.exports = function (app) {
       page = page? page: 1
       var name = req.session.user.name,
         posts = []
-      Post.find({}, {}, {limit: 2}, function (err, result) {
+      Post.count({}, function (err, count) {
         if(err){
           req.flash('error', err)
           res.redirect('/')
         }else{
-          result.forEach(function (post, index) {
-            post.content = markdown.toHTML(post.content)
+          Post.find({}, {}, {sort:{createdAt: -1}, limit: 2, skip: (page - 1) * 2}, function (err, result) {
+            if(err){
+              req.flash('error', err)
+              res.redirect('/')
+            }else{
+              result.forEach(function (post, index) {
+                post.content = markdown.toHTML(post.content)
+              })
+              posts = result
+            }
+            res.render('index', {
+              title: 'homepage',
+              user: req.session.user,
+              success: req.flash('success').toString(),
+              error: req.flash('error').toString(),
+              posts: posts,
+              isFirst: (page - 1) === 0,
+              isLast: ((page - 1) * 2 + posts.length) >= count,
+              page: page
+            })
           })
-          posts = result
         }
-        res.render('index', {
-          title: 'homepage',
-          user: req.session.user,
-          success: req.flash('success').toString(),
-          error: req.flash('error').toString(),
-          posts: posts
-        })
       })
     }else{
       var posts = []
-      Post.find({}, {}, {limit: 1}, function (err, result) {
+      Post.find({}, {}, {sort:{createdAt: -1}, limit: 2}, function (err, result) {
         if(err){
           req.flash('error', err)
           res.redirect('/')
@@ -69,7 +79,10 @@ module.exports = function (app) {
           user: req.session.user,
           success: req.flash('success').toString(),
           error: req.flash('error').toString(),
-          posts: posts
+          posts: posts,
+          isFirst: true,
+          isLast: true,
+          page: page
         })
       })
     }
@@ -175,7 +188,8 @@ module.exports = function (app) {
         title: req.body.title,
         content: req.body.content,
         createdAt: Date.now(),
-        date: moment(Date.now()).format('YYYYMMDD')
+        date: moment(Date.now()).format('YYYYMMDD'),
+        tags: [req.body.tag1, req.body.tag2, req.body.tag3]
       })
     post.save(function (err) {
       if(err){
@@ -216,25 +230,37 @@ module.exports = function (app) {
   app.get('/u/:name', checkLogin)
   app.get('/u/:name', function (req, res) {
     var name_using = req.session.user.name,
-      name_user = req.params.name
-    Post.find({name: name_user}, {}, function (err, result) {
+      name_user = req.params.name,
+      page = parseInt(req.query.p)
+    page = page? page: 1
+    Post.count({name: name_user}, function (err, count) {
       if(err){
         req.flash('error', err)
         res.redirect('/')
-      }else if(!result){
-        req.flash('error', 'article not exits.')
-        res.redirect('/')
       }else{
-        result.forEach(function (post, index) {
-          post.content = markdown.toHTML(post.content)
-        })
-        posts = result
-        res.render('user', {
-          title: name_user,
-          user: req.session.user,
-          success: req.flash('success').toString(),
-          error: req.flash('error').toString(),
-          posts: posts
+        Post.find({name: name_user}, {}, {sort: {createdAt: -1}, limit: 2, skip: (page - 1) * 2}, function (err, result) {
+          if(err){
+            req.flash('error', err)
+            res.redirect('/')
+          }else if(!result){
+            req.flash('error', 'article not exits.')
+            res.redirect('/')
+          }else{
+            result.forEach(function (post, index) {
+              post.content = markdown.toHTML(post.content)
+            })
+            posts = result
+            res.render('user', {
+              title: name_user,
+              user: req.session.user,
+              success: req.flash('success').toString(),
+              error: req.flash('error').toString(),
+              posts: posts,
+              isFirst: (page - 1) === 0,
+              isLast: ((page - 1) * 2 + posts.length) >= count,
+              page: page
+            })
+          }
         })
       }
     })
@@ -380,6 +406,85 @@ module.exports = function (app) {
           }else{
             req.flash('success', 'remove success')
             res.redirect('/')
+          }
+        })
+      }
+    })
+  })
+
+  //tag
+  app.get('/tags/:tag', checkLogin)
+  app.get('/tags/:tag', function (req, res) {
+    var tag = req.params.tag,
+      page = parseInt(req.query.p)
+    page = page? page: 1
+    Post.count({tags: {$in: [tag]}}, function (err, count) {
+      if(err){
+        req.flash('error', err)
+        res.redirect('/')
+      }else{
+        Post.find({tags: {$in: [tag]}}, {}, {sort: {createdAt: -1}, limit: 2, skip: (page - 1) * 2}, function (err, result) {
+          if(err){
+            req.flash('error', err)
+            res.redirect('/')
+          }else if(!result){
+            req.flash('error', 'article not exits.')
+            res.redirect('/')
+          }else{
+            result.forEach(function (post, index) {
+              post.content = markdown.toHTML(post.content)
+            })
+            posts = result
+            res.render('tag', {
+              title: tag,
+              user: req.session.user,
+              success: req.flash('success').toString(),
+              error: req.flash('error').toString(),
+              posts: posts,
+              isFirst: (page - 1) === 0,
+              isLast: ((page - 1) * 2 + posts.length) >= count,
+              page: page
+            })
+          }
+        })
+      }
+    })
+  })
+
+  //tag
+  app.get('/search', checkLogin)
+  app.get('/search', function (req, res) {
+    var keyword = req.query.keyword,
+      page = parseInt(req.query.p)
+    page = page? page: 1
+    var pattern = new RegExp(keyword, 'igm')
+    Post.count({title: pattern}, function (err, count) {
+      if(err){
+        req.flash('error', err)
+        res.redirect('/')
+      }else{
+        Post.find({title: pattern}, {}, {sort: {createdAt: -1}, limit: 2, skip: (page - 1) * 2}, function (err, result) {
+          if(err){
+            req.flash('error', err)
+            res.redirect('/')
+          }else if(!result){
+            req.flash('error', 'article not exits.')
+            res.redirect('/')
+          }else{
+            result.forEach(function (post, index) {
+              post.content = markdown.toHTML(post.content)
+            })
+            posts = result
+            res.render('search', {
+              title: keyword,
+              user: req.session.user,
+              success: req.flash('success').toString(),
+              error: req.flash('error').toString(),
+              posts: posts,
+              isFirst: (page - 1) === 0,
+              isLast: ((page - 1) * 2 + posts.length) >= count,
+              page: page
+            })
           }
         })
       }

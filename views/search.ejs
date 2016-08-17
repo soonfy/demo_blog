@@ -2,6 +2,7 @@
 <% posts.forEach(function(post, index){ %>
 <p><h2><a href="/u/<%= post.name %>/<%= moment(post.createdAt).format('YYYYMMDD') %>/<%= post.title %>"><%= post.title %></a></h2></p>
 <p class="info">
+  author: <%= post.name %>
   date: <%= moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss') %>
   tags: 
   <% post.tags.forEach(function(tag, index){ %>
@@ -10,7 +11,17 @@
     <% } %>
   <% }) %>
 </p>
-<p><%- post.content %></p>
+<div>
+  <% if(!isFirst){ %>
+  <span class="prepage"><a title="prepage" href="?keyword=<%= title %>&p=<%= page - 1 %>">prepage</a></span>
+  <% }else{ %>
+  <span class="prepage">prepage</span>
+  <% } %>
+  <% if(!isLast){ %>
+  <span class="nextpage"><a title="nextpage" href="?keyword=<%= title %>&p=<%= page + 1 %>">nextpage</a></span>
+  <% }else{ %>
+  <span class="nextpage">nextpage</span>
+  <% } %>
+</div>
 <% }) %>
-<%- include page %>
 <%- include footer %>
