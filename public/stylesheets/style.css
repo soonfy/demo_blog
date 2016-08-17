@@ -110,9 +110,13 @@ div.label label{
 	text-align:left;
 }
 div.status{
-  position: absolute;
+  position: fixed;
+  margin-left: -10em;
   padding: 5px;
   bottom: 5px;
+}
+div.error{
+  color: #990000
 }
 textarea{
   display: block;

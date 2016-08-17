@@ -45,8 +45,8 @@ app.use(express.static(path.join(__dirname, 'node_modules')))   //import node_mo
 app.locals.moment = require('moment')             //import date format
 
 //connect mongodb
-// var dburl = 'mongodb://localhost/demo_blog'                //no auth
-var dburl = 'mongodb://soonfy:163@localhost:27017/demo_blog'          //auth
+var dburl = 'mongodb://localhost/demo_blog'                //no auth
+// var dburl = 'mongodb://soonfy:163@localhost:27017/demo_blog'          //auth
 mongoose.connect(dburl)
 mongoose.set('debug', true)             //mongo debug
 

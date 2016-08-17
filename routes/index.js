@@ -98,7 +98,7 @@ module.exports = function (app) {
     User.findOne({name: name}, {name: 1}, function (err, result) {
       if(err){
         req.flash('error', err)
-        return res.redirect('/')
+        return res.redirect('/register')
       }else if(result !== null){
         req.flash('error', 'the user ' + name + ' exits.')
         return res.redirect('/register')
@@ -111,6 +111,7 @@ module.exports = function (app) {
         _user.save(function (err) {
           if(err){
             req.flash('error', err)
+            res.redirect('/')
           }else{
             req.session.user = _user
             req.flash('success', 'register success.')
@@ -212,10 +213,10 @@ module.exports = function (app) {
     Post.find({name: name_user}, {}, function (err, result) {
       if(err){
         req.flash('error', err)
-        res.redirect('back')
+        res.redirect('/')
       }else if(!result){
         req.flash('error', 'article not exits.')
-        res.redirect('back')
+        res.redirect('/')
       }else{
         result.forEach(function (post, index) {
           post.content = markdown.toHTML(post.content)
@@ -241,10 +242,10 @@ module.exports = function (app) {
     Post.findOne({name: name_user, date: date_user, title: title_user}, {}, function (err, result) {
       if(err){
         req.flash('error', err)
-        res.redirect('back')
+        res.redirect('/')
       }else if(!result){
         req.flash('error', 'article not exits.')
-        res.redirect('back')
+        res.redirect('/')
       }else{
         result.content = markdown.toHTML(result.content)
         post = result
@@ -281,13 +282,13 @@ module.exports = function (app) {
       // console.log(result)
       if(err){
         req.flash('error', err)
-        res.redirect('back')
+        res.redirect('/')
       }else{
         result.comments.push(comment)
         result.save(function (err) {
           if(err){
             req.flash('error', err)
-            res.redirect('back')
+            res.redirect('/')
           }else{
             req.flash('success', 'comment success.')
             res.redirect('back')
@@ -306,10 +307,10 @@ module.exports = function (app) {
     Post.findOne({name: name_user, date: date_user, title: title_user}, {}, function (err, result) {
       if(err){
         req.flash('error', err)
-        res.redirect('back')
+        res.redirect('/')
       }else if(!result){
         req.flash('error', 'article not exits.')
-        res.redirect('back')
+        res.redirect('/')
       }else{
         // result.content = markdown.toHTML(result.content)
         post = result
@@ -340,7 +341,7 @@ module.exports = function (app) {
       var url = encodeURI('/u/' + name_user + '/' + date_user + '/' + title_user)
       if(err){
         req.flash('error', err)
-        res.redirect(url)
+        res.redirect('/')
       }else{
         req.flash('success', 'edit success.')
         res.redirect(url)
@@ -357,15 +358,15 @@ module.exports = function (app) {
     Post.findOne({name: name_user, date: date_user, title: title_user}, {}, function (err, result) {
       if(err){
         req.flash('error', err)
-        res.redirect('back')
+        res.redirect('/')
       }else if(!result){
         req.flash('error', 'article not exits.')
-        res.redirect('back')
+        res.redirect('/')
       }else{
         result.remove(function (err) {
           if(err){
             req.flash('error', err)
-            res.redirect(url)
+            res.redirect('/')
           }else{
             req.flash('success', 'remove success')
             res.redirect('/')
