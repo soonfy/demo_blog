@@ -33,7 +33,6 @@ nav a{
   color: #000000;
 }
 nav a:hover{
-  /** background-color: #ff0000;  */
   background: url(/images/arrow2.gif) no-repeat center right;
   color: #000000;
   -webkit-transition: color 0.2s linear;

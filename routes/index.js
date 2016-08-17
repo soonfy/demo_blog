@@ -8,20 +8,6 @@ var Post = require('../models/post')    //post collection
 var markdown = require('markdown').markdown       //markdown
 var moment = require('moment')          //date format
 
-/**
- * remove
- */
-// /* GET home page. */
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
-
-// module.exports = router;
-
-/**
- * insert blog routes
- */
-
 //not login,goto login page
 var checkLogin = function (req, res, next) {
   if(!req.session.user){
@@ -41,11 +27,14 @@ var checkNotLogin = function (req, res, next) {
 }
 
 module.exports = function (app) {
+  //index
   app.get('/', function (req, res) {
+    var page = parseInt(req.query.p)
     if(req.session.user){
+      page = page? page: 1
       var name = req.session.user.name,
         posts = []
-      Post.find({}, {}, function (err, result) {
+      Post.find({}, {}, {limit: 2}, function (err, result) {
         if(err){
           req.flash('error', err)
           res.redirect('/')
@@ -64,16 +53,29 @@ module.exports = function (app) {
         })
       })
     }else{
-      res.render('index', {
-        title: 'homepage',
-        user: req.session.user,
-        success: req.flash('success').toString(),
-        error: req.flash('error').toString(),
-        posts: []
+      var posts = []
+      Post.find({}, {}, {limit: 1}, function (err, result) {
+        if(err){
+          req.flash('error', err)
+          res.redirect('/')
+        }else{
+          result.forEach(function (post, index) {
+            post.content = markdown.toHTML(post.content)
+          })
+          posts = result
+        }
+        res.render('index', {
+          title: 'homepage',
+          user: req.session.user,
+          success: req.flash('success').toString(),
+          error: req.flash('error').toString(),
+          posts: posts
+        })
       })
     }
   })
 
+  //register
   app.get('/register', checkNotLogin)
   app.get('/register', function (req, res) {
     res.render('register', {
@@ -122,6 +124,7 @@ module.exports = function (app) {
     })
   })
 
+  //login
   app.get('/login', checkNotLogin)
   app.get('/login', function (req, res) {
     res.render('login', {
@@ -154,6 +157,7 @@ module.exports = function (app) {
     })
   })
 
+  //post
   app.get('/post', checkLogin)
   app.get('/post', function (req, res) {
     res.render('post', {
@@ -184,6 +188,7 @@ module.exports = function (app) {
     })
   })
 
+  //logout
   app.get('/logout', checkLogin)
   app.get('/logout', function (req, res) {
     req.session.user = null
@@ -191,6 +196,7 @@ module.exports = function (app) {
     res.redirect('/')
   })
 
+  //upload
   app.get('/upload', checkLogin)
   app.get('/upload', function (req, res) {
     res.render('upload', {
@@ -206,6 +212,7 @@ module.exports = function (app) {
     res.redirect('/upload')
   })
 
+  //user
   app.get('/u/:name', checkLogin)
   app.get('/u/:name', function (req, res) {
     var name_using = req.session.user.name,
@@ -233,6 +240,7 @@ module.exports = function (app) {
     })
   })
 
+  //article
   app.get('/u/:name/:date/:title', checkLogin)
   app.get('/u/:name/:date/:title', function (req, res) {
     var name_using = req.session.user.name,
@@ -260,6 +268,7 @@ module.exports = function (app) {
     })
   })
 
+  //comment
   app.post('/u/:name/:date/:title', checkLogin)
   app.post('/u/:name/:date/:title', function (req, res) {
     console.log(req.body)
@@ -298,6 +307,7 @@ module.exports = function (app) {
     })
   })
 
+  //edit
   app.get('/edit/:name/:date/:title', checkLogin)
   app.get('/edit/:name/:date/:title', function (req, res) {
     var name_using = req.session.user.name,
@@ -324,7 +334,6 @@ module.exports = function (app) {
       }
     })
   })
-
   app.post('/edit/:name/:date/:title', checkLogin)
   app.post('/edit/:name/:date/:title', function (req, res) {
     var name_using = req.session.user.name,
@@ -349,6 +358,7 @@ module.exports = function (app) {
     })
   })
 
+  //remove
   app.get('/remove/:name/:date/:title', checkLogin)
   app.get('/remove/:name/:date/:title', function (req, res) {
     var name_using = req.session.user.name,
