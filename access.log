@@ -1,3 +1,0 @@
-::1 - - [Wed, 17 Aug 2016 09:30:42 GMT] "GET / HTTP/1.1" 200 1865 "http://localhost:3000/u/sf/20160817/11111" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36"
-::1 - - [Wed, 17 Aug 2016 09:30:42 GMT] "GET /stylesheets/style.css HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36"
-::1 - - [Wed, 17 Aug 2016 09:30:42 GMT] "GET /javascripts/style.js HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36"
