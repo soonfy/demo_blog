@@ -46,8 +46,8 @@ article{
   padding-top: 0.5em;
 }
 article a{
-  color: #dd0000;
   text-decoration: none;
+  cursor: pointer;
 }
 article a:hover{
   color: #333333;
@@ -66,7 +66,7 @@ article a:hover{
 }
 .edit:hover{
   text-decoration: none;
-  background-color: #ff0000;
+  background-color: #fc6c0d;
   color: #ffffff;
   -webkit-transition: color 0.2s linear;
 }
@@ -74,8 +74,8 @@ input{
   padding-left: 10px; 
   width:250px;
 	height:25px;
-	border:1px solid #ccc;
-	background:#fff;
+	border:1px solid #cccccc;
+	background:#ffffff;
 	font-size:13px;
 }
 /** login按钮  */
@@ -102,7 +102,7 @@ input.register {
 }
 div.label{
   font-size:14px;
-	color:#666;
+	color:#666666;
 	text-align:left;
 }
 div.label label{
@@ -111,7 +111,7 @@ div.label label{
   width: 100px;
   height: 14px;
   font-size:14px;
-	color:#666;
+	color:#666666;
 	text-align:left;
 }
 div.status{
@@ -128,7 +128,7 @@ textarea{
   padding: 5px 0 5px 5px;
   line-height: 16px;
   font-size:14px;
-	color:#666;
+	color:#666666;
 	text-align:left;
 }
 /** post按钮  */
@@ -179,8 +179,8 @@ input.tag{
   padding-left: 10px; 
   width:75px;
 	height:25px;
-	border:1px solid #ccc;
-	background:#fff;
+	border:1px solid #cccccc;
+	background:#ffffff;
 	font-size:13px;
 }
 span.search{
@@ -193,8 +193,8 @@ span.search input{
   margin-left: 10px;
   width:200px;
 	height:30px;
-	border:1px solid #ccc;
-	background:#fff;
+	border:1px solid #cccccc;
+	background:#ffffff;
 	font-size:13px;
 }
 /** search按钮  */
@@ -207,4 +207,36 @@ span.search input.search {
 	background:url(/images/search.jpg) no-repeat;
 	border:none;
 	cursor:pointer;
+}
+div.page{
+  height: 50px;
+  width: 600px
+}
+span.page{
+  float: right;
+  padding: 20px 0 0 0;
+  display: inline-block;
+  width: 80px;
+}
+div.list{
+  height: 200px;
+  width: 600px;
+  border-bottom: 1px solid #cccccc
+}
+div.list span.right{
+  float: right;
+}
+div.list span{
+  display: inline-block;
+  padding: 2px;
+}
+h2 a.name{
+  color: #fc6c0d;
+  font-size: 20px;
+  font-weight: bold;
+}
+h2 a.title{
+  color: #000000;
+  font-size: 20px;
+  font-weight: bold;
 }

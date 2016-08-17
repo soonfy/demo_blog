@@ -1,18 +1,27 @@
 <%- include header %>
 <% posts.forEach(function(post, index){ %>
-<p><h2><a href="/u/<%= post.name %>/<%= moment(post.createdAt).format('YYYYMMDD') %>/<%= post.title %>"><%= post.title %></a></h2></p>
-<p class="info">
-  author: <a href="/u/<%= post.name %>"><%= post.name %></a> | 
-  date: <%= moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss') %>
-  tags: 
-  <% post.tags.forEach(function(tag, index){ %>
-    <% if(tag){ %>
-      <a class="tag" href="/tags/<%= tag %>"><%= tag %></a>
-    <% } %>
-  <% }) %>
-</p>
-<p><%- post.content %></p>
-<p><span>pv: </span><span><%= post.pageviewer %></span><span>pc: </span><span><%= post.comments.length %></span></p>
+<div class="list">
+  <h2>
+    <a class="name" href="/u/<%= post.name %>"><%= post.name %></a>
+    <span>|</span
+    ><a class="title" href="/u/<%= post.name %>/<%= moment(post.createdAt).format('YYYYMMDD') %>/<%= post.title %>"><%= post.title %></a>
+  </h2>
+  <p><%- post.content.substring(0, 100) + '...' %></p>
+  <p class="pv_pc">
+    <span class="center">
+      <span>date</span><span><%= moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss') %></span>
+      <% post.tags.forEach(function(tag, index){ %>
+      <% if(tag){ %>
+        <span><a class="tag" href="/tags/<%= tag %>"><%= tag %></a></span>
+      <% } %>
+    <% }) %>
+    </span>
+    <span class="right">
+      <span>pv</span><span>(<%= post.pageviewer %>)</span>
+      <span>|</span>
+      <span>pc</span><span>(<%= post.comments.length %>)</span></p>
+    </span>
+</div>
 <% }) %>
 <%- include page %>
 <%- include footer %>

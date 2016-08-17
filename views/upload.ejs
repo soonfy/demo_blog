@@ -1,8 +1,8 @@
 <%- include header %>
 <form method="POST" action="/upload" enctype="multipart/form-data">
-  <input type="file" name="file1" value="" /><br />
-  <input type="file" name="file2" value="" /><br />
-  <input type="file" name="file3" value="" /><br />
+  <div class="label"><label for="file1">text</label><input type="file" name="file1" value="" /></div>
+  <div class="label"><label for="file2">csv</label><input type="file" name="file2" value="" /></div>
+  <div class="label"><label for="file3">img</label><input type="file" name="file3" value="" /></div>
   <input type="submit" class="upload" name="upload" value="">
 </form>
 <%- include footer %>

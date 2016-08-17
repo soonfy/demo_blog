@@ -13,14 +13,14 @@
 </p>
 <div>
   <% if(!isFirst){ %>
-  <span class="prepage"><a title="prepage" href="?keyword=<%= title %>&p=<%= page - 1 %>">prepage</a></span>
+  <span class="page"><a title="prepage" href="?keyword=<%= title %>&p=<%= page - 1 %>">prepage</a></span>
   <% }else{ %>
-  <span class="prepage">prepage</span>
+  <span class="page"></span>
   <% } %>
   <% if(!isLast){ %>
-  <span class="nextpage"><a title="nextpage" href="?keyword=<%= title %>&p=<%= page + 1 %>">nextpage</a></span>
+  <span class="page"><a title="nextpage" href="?keyword=<%= title %>&p=<%= page + 1 %>">nextpage</a></span>
   <% }else{ %>
-  <span class="nextpage">nextpage</span>
+  <span class="page"></span>
   <% } %>
 </div>
 <% }) %>
