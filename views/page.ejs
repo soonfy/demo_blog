@@ -1,12 +1,16 @@
 <div class="page">
+  <% if(!isFirst && !isLast){ %>
+  <span class="page"><a title="nextpage" href="?p=<%= page + 1 %>">nextpage</a></span>
+  <span class="page"><a title="prepage" href="?p=<%= page - 1 %>">prepage</a></span>
+  <% } %>
   <% if(isFirst && isLast){ %>
   <span class="page"></span><span class="page"></span>
   <% } %>
-  <% if(!isFirst){ %>
+  <% if(!isFirst && isLast){ %>
   <span class="page">nextpage</span>
   <span class="page"><a title="prepage" href="?p=<%= page - 1 %>">prepage</a></span>
   <% } %>
-  <% if(!isLast){ %>
+  <% if(isFirst && !isLast){ %>
   <span class="page"><a title="nextpage" href="?p=<%= page + 1 %>">nextpage</a></span>
   <span class="page">prepage</span>
   <% } %>

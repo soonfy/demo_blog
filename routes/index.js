@@ -45,6 +45,18 @@ module.exports = function (app) {
               res.redirect('/')
             }else{
               result.forEach(function (post, index) {
+                post.pageviewer += 1
+                post.save()
+              })
+            }
+          })
+          Post.find({}, {}, {sort:{createdAt: -1}, limit: 2, skip: (page - 1) * 2}, function (err, result) {
+            // console.log(result);
+            if(err){
+              req.flash('error', err)
+              res.redirect('/')
+            }else{
+              result.forEach(function (post, index) {
                 post.content = markdown.toHTML(post.content)
               })
               posts = result
@@ -64,6 +76,17 @@ module.exports = function (app) {
       })
     }else{
       var posts = []
+      Post.find({}, {}, {sort:{createdAt: -1}, limit: 2}, function (err, result) {
+        if(err){
+          req.flash('error', err)
+          res.redirect('/')
+        }else{
+          result.forEach(function (post, index) {
+            post.pageviewer += 1
+            post.save()
+          })
+        }
+      })
       Post.find({}, {}, {sort:{createdAt: -1}, limit: 2}, function (err, result) {
         if(err){
           req.flash('error', err)
@@ -189,7 +212,8 @@ module.exports = function (app) {
         content: req.body.content,
         createdAt: Date.now(),
         date: moment(Date.now()).format('YYYYMMDD'),
-        tags: [req.body.tag1, req.body.tag2, req.body.tag3]
+        tags: [req.body.tag1, req.body.tag2, req.body.tag3],
+        pageviewer: 1
       })
     post.save(function (err) {
       if(err){
@@ -238,6 +262,17 @@ module.exports = function (app) {
         req.flash('error', err)
         res.redirect('/')
       }else{
+        Post.find({name: name_user}, {}, {sort:{createdAt: -1}, limit: 2, skip: (page - 1) * 2}, function (err, result) {
+          if(err){
+            req.flash('error', err)
+            res.redirect('/')
+          }else{
+            result.forEach(function (post, index) {
+              post.pageviewer += 1
+              post.save()
+            })
+          }
+        })
         Post.find({name: name_user}, {}, {sort: {createdAt: -1}, limit: 2, skip: (page - 1) * 2}, function (err, result) {
           if(err){
             req.flash('error', err)
@@ -273,6 +308,15 @@ module.exports = function (app) {
       name_user = req.params.name,
       date_user = req.params.date,
       title_user = req.params.title
+    Post.findOne({name: name_user, date: date_user, title: title_user}, {}, function (err, result) {
+      if(err){
+        req.flash('error', err)
+        res.redirect('/')
+      }else{
+        result.pageviewer += 1
+        result.save()
+      }
+    })
     Post.findOne({name: name_user, date: date_user, title: title_user}, {}, function (err, result) {
       if(err){
         req.flash('error', err)
@@ -423,6 +467,17 @@ module.exports = function (app) {
         req.flash('error', err)
         res.redirect('/')
       }else{
+        Post.find({tags: {$in: [tag]}}, {}, {sort:{createdAt: -1}, limit: 2, skip: (page - 1) * 2}, function (err, result) {
+          if(err){
+            req.flash('error', err)
+            res.redirect('/')
+          }else{
+            result.forEach(function (post, index) {
+              post.pageviewer += 1
+              post.save()
+            })
+          }
+        })
         Post.find({tags: {$in: [tag]}}, {}, {sort: {createdAt: -1}, limit: 2, skip: (page - 1) * 2}, function (err, result) {
           if(err){
             req.flash('error', err)
@@ -463,6 +518,17 @@ module.exports = function (app) {
         req.flash('error', err)
         res.redirect('/')
       }else{
+        Post.find({title: pattern}, {}, {sort:{createdAt: -1}, limit: 2, skip: (page - 1) * 2}, function (err, result) {
+          if(err){
+            req.flash('error', err)
+            res.redirect('/')
+          }else{
+            result.forEach(function (post, index) {
+              post.pageviewer += 1
+              post.save()
+            })
+          }
+        })
         Post.find({title: pattern}, {}, {sort: {createdAt: -1}, limit: 2, skip: (page - 1) * 2}, function (err, result) {
           if(err){
             req.flash('error', err)

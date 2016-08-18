@@ -1,15 +1,6 @@
 <%- include header %>
 <% posts.forEach(function(post, index){ %>
-<p><h2><a href="/u/<%= post.name %>/<%= moment(post.createdAt).format('YYYYMMDD') %>/<%= post.title %>"><%= post.title %></a></h2></p>
-<p class="info">
-  date: <%= moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss') %>
-  tags: 
-  <% post.tags.forEach(function(tag, index){ %>
-    <% if(tag){ %>
-      <a class="tag" href="/tags/<%= tag %>"><%= tag %></a>
-    <% } %>
-  <% }) %>
-</p>
+  <%- include content %>
 <p><%- post.content %></p>
 <% }) %>
 <%- include page %>

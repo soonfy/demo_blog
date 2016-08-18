@@ -1,0 +1,28 @@
+<div class="list">
+  <h2>
+    <a class="name" href="/u/<%= post.name %>"><%= post.name %></a>
+    <span>|</span
+    ><a class="title" href="/u/<%= post.name %>/<%= moment(post.createdAt).format('YYYYMMDD') %>/<%= post.title %>"><%= post.title %></a>
+  </h2>
+  <div class="content">
+    <p><%- post.content.length > 100? post.content.substring(0, 100) + '...': post.content %></p>
+  </div>
+  <div class="pv_pc">
+    <span><%= moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss') %></span>
+    <span class="tag">
+      <% post.tags.forEach(function(tag, index){ %>
+        <% if(tag){ %>
+          <% if(index){ %>
+            <span>|</span>
+          <% } %>
+          <span><a class="tag" href="/tags/<%= tag %>"><%= tag %></a></span>
+        <% } %>
+      <% }) %>
+    </span>
+    <span class="right">
+      <span>pv</span><span>(<%= post.pageviewer %>)</span>
+      <span>|</span>
+      <span>pc</span><span>(<%= post.comments.length %>)</span>
+    </span>
+  </div>
+</div>

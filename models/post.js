@@ -16,7 +16,10 @@ var SchemaPost = new Schema({
     type: Array,
     default: []
   },
-  pageviewer: Number
+  pageviewer: {
+    type: Number,
+    default: 1
+  }
 })
 
 module.exports = mongoose.model('post', SchemaPost)
