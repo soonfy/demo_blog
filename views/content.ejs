@@ -1,11 +1,11 @@
 <div class="list">
   <h2>
     <a class="name" href="/u/<%= post.name %>"><%= post.name %></a>
-    <span>|</span
-    ><a class="title" href="/u/<%= post.name %>/<%= moment(post.createdAt).format('YYYYMMDD') %>/<%= post.title %>"><%= post.title %></a>
+    <span>|</span>
+    <a class="title" href="/u/<%= post.name %>/<%= moment(post.createdAt).format('YYYYMMDD') %>/<%= post.title %>"><%= post.title %></a>
   </h2>
   <div class="content">
-    <p><%- post.content.length > 100? post.content.substring(0, 100) + '...': post.content %></p>
+    <p><%- post.content.length > 50? post.content.substring(0, 50): post.content %></p>
   </div>
   <div class="pv_pc">
     <span><%= moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss') %></span>

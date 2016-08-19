@@ -1,16 +1,16 @@
-<br />
 <% post.comments.forEach(function(comment, index){ %>
-<p><a href="<%= comment.comment_website %>"><%= comment.comment_name %></a>
-  <span class="info"> comment at <%= moment(comment.createdAt).format('YYYY-MM-DD HH:mm:ss') %></span>
-</p>
-<p><%- comment.comment_content %></p>
+<div class="comment">
+  <span><a href="<%= comment.comment_website %>"><%= comment.comment_name %></a></span>
+  <span class="right"><%= moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss') %></span>
+  <p class="content"><%- comment.comment_content %></p>
+</div>
 <% }) %>
 
 <form method="POST">
   <% if(user){ %>
-  <div class="label"><label for="name">name</label><input type="text" id="name" name="name" value="<%= user.name %>" /></div>
-  <div class="label"><label for="email">email</label><input type="email" id="email" name="email" value="<%= user.email %>" /></div>
-  <div class="label"><label for="website">website</label><input type="text" id="website" name="website" value="/u/<%= user.name %>" /></div>
+  <div class="label"><label for="name">name</label><input class="read" type="text" id="name" name="name" value="<%= user.name %>" readonly="readonly" /></div>
+  <div class="label"><label for="email">email</label><input class="read"  type="email" id="email" name="email" value="<%= user.email %>" readonly="readonly" /></div>
+  <div class="label"><label for="website">website</label><input class="read"  type="text" id="website" name="website" value="/u/<%= user.name %>" readonly="readonly" /></div>
   <% } %>
   <div class="label"><label for="content">content</label><textarea rows="5" cols="50" id="content" name="content" placeholder="comment content"></textarea></div>
   <input type="submit" class="comment" name="comment" value="" />

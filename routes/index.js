@@ -328,7 +328,7 @@ module.exports = function (app) {
         result.content = markdown.toHTML(result.content)
         post = result
         res.render('article', {
-          title: title_user,
+          title: 'blog',
           user: req.session.user,
           success: req.flash('success').toString(),
           error: req.flash('error').toString(),

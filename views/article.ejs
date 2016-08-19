@@ -1,20 +1,40 @@
 <%- include header %>
-<% if(user.name === post.name){ %>
-<p>
-  <span><a class="edit" href="/edit/<%= post.name %>/<%= moment(post.createdAt).format('YYYYMMDD') %>/<%= post.title %>">edit</a></span>
-  <span><a class="edit" href="/remove/<%= post.name %>/<%= moment(post.createdAt).format('YYYYMMDD') %>/<%= post.title %>">remove</a></span>
-</p>
-<% } %>
-<p class="info">
-  author: <a href="/u/<%= post.name %>"><%= post.name %></a> | 
-  date: <%= moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss') %>
-  tags: 
-  <% post.tags.forEach(function(tag, index){ %>
-    <% if(tag){ %>
-      <a class="tag" href="/tags/<%= tag %>"><%= tag %></a>
-    <% } %>
-  <% }) %>
-</p>
-<p><%- post.content %></p>
-<%- include comment %>
+<div class="left">
+  <% if(user.name === post.name){ %>
+  <p>
+    <span><a class="edit" href="/remove/<%= post.name %>/<%= moment(post.createdAt).format('YYYYMMDD') %>/<%= post.title %>">remove</a></span>
+    <span><a class="edit" href="/edit/<%= post.name %>/<%= moment(post.createdAt).format('YYYYMMDD') %>/<%= post.title %>">edit</a></span>
+  </p>
+  <% } %>
+  <div class="article">
+    <h2><%= post.title %></h2>
+    <div>
+      <p><%- post.content %></p>
+    </div>
+    <div class="pv_pc">
+      <span><%= moment(post.createdAt).format('YYYY-MM-DD HH:mm:ss') %></span>
+      <span class="tag">
+        <% post.tags.forEach(function(tag, index){ %>
+          <% if(tag){ %>
+            <% if(index){ %>
+              <span>|</span>
+            <% } %>
+            <span><a class="tag" href="/tags/<%= tag %>"><%= tag %></a></span>
+          <% } %>
+        <% }) %>
+      </span>
+      <span class="right">
+        <span>pv</span><span>(<%= post.pageviewer %>)</span>
+        <span>|</span>
+        <span>pc</span><span>(<%= post.comments.length %>)</span>
+      </span>
+    </div>
+  </div>
+  <%- include comment %>
+</div>
+<div class="right">
+  <h2>
+    <a class="name" href="/u/<%= post.name %>"><%= post.name %></a>
+  </h2>
+</div>
 <%- include footer %>
