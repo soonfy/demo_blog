@@ -52,12 +52,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));      //import public path
+app.use(express.static(path.join(__dirname, 'public', 'upload')));      //import picture path
 app.use(express.static(path.join(__dirname, 'node_modules')))   //import node_modules path
 app.locals.moment = require('moment')             //import date format
 
 //connect mongodb
-var dburl = 'mongodb://localhost/demo_blog'                //no auth
-// var dburl = 'mongodb://soonfy:163@localhost:27017/demo_blog'          //auth
+// var dburl = 'mongodb://localhost/demo_blog'                //no auth
+var dburl = 'mongodb://soonfy:163@localhost:27017/demo_blog'          //auth
 mongoose.connect(dburl)
 mongoose.set('debug', true)             //mongo debug
 
@@ -89,9 +90,9 @@ app.use(session({
 
 //new error log file
 app.use(function (err, req, res, next) {
-  var user = req.session.user? req.session.user: 'not login user'
-  var meta = '[' + new Date() + '] ' + req.session.user + ' get ' + req.url + ' exits error. \r\n'
-  errorLog.write(meta + err.stack + '\r\n\r\n\r\n')
+  console.log(err);
+  var meta = '[' + new Date() + '] ' + '\r\n\r\n' + err.stack
+  errorLog.write(meta + '\r\n\r\n')
   next()
 })
 

@@ -35,11 +35,13 @@ nav a{
   text-decoration: none;
   padding: 0.7em 1em;
   color: #000000;
+  opacity: 0.5;
 }
 nav a:hover{
   background: url(/images/arrow2.gif) no-repeat center right;
   color: #000000;
   -webkit-transition: color 0.2s linear;
+  opacity: 1;
 }
 article{
   font-size: 16px;
@@ -218,7 +220,7 @@ span.search input.search {
 }
 div.page{
   height: 50px;
-  width: 600px
+  width: 800px
 }
 span.page{
   float: right;
@@ -226,8 +228,8 @@ span.page{
   width: 80px;
 }
 div.list{
-  height: 500px;
-  width: 600px;
+  height: 310px;
+  width: 800px;
   border-right: 1px solid #cccccc;
 }
 div.pv_pc span.right{
@@ -237,21 +239,47 @@ div.list span{
   display: inline-block;
   padding: 2px;
 }
+h2 a.avatar{
+  vertical-align: top;
+}
 h2 a.name{
+  display: inline-block;
+  padding-top: 15px;
+  padding-left: 20px;
+  padding-right: 5px;
   color: #fc6c0d;
   font-size: 20px;
   font-weight: bold;
+  vertical-align: top;
+}
+h2 span.split{
+  padding-top: 10px;
+  vertical-align: top;
 }
 h2 a.title{
+  display: inline-block;
+  padding-top: 15px;
+  padding-left: 30px;
   color: #000000;
   font-size: 20px;
   font-weight: bold;
+  vertical-align: top;
 }
 div.list div.content{
-  height: 400px;
+  height: 200px;
   font-size: 14px;
   padding: 10px;
 	color:#333333;
+  cursor: pointer;
+}
+div.list div.content p a{
+  color: #666666;
+  cursor: pointer;
+  word-wrap: break-word;
+}
+div.list div.content p a:hover{
+  text-decoration: none;
+  color: #333333;
 }
 div.pv_pc{
   margin-right: 10px;
@@ -266,6 +294,7 @@ div.pv_pc span.tag{
 }
 div.label input.read{
   font-size: 13px;
+  color: #000000;
   background-color: #888888;
   opacity: 0.3;
 }
@@ -274,6 +303,9 @@ div.article{
 }
 div.article h2{
   padding: 0 0 50px;
+}
+div.article div p{
+  word-wrap: break-word;
 }
 div.left{
   float:left;

@@ -1,11 +1,11 @@
 <%- include header %>
 <form method="POST">
-  <div class="label"><label for="title">title</label><input type="text" id="title" name="title" value="<%= post.title %>" disabled="disabled" /></div>
+  <div class="label"><label for="title">title</label><input class="read" type="text" id="title" name="title" value="<%= post.title %>" disabled="disabled" /></div>
   <div class="label">
     <label class="tag">tag</label>
-    <input type="text" class="tag" name="tag1" value="<%= post.tags[0] %>" disabled="disabled" />
-    <input type="text" class="tag" name="tag2" value="<%= post.tags[1] %>" disabled="disabled" />
-    <input type="text" class="tag" name="tag3" value="<%= post.tags[2] %>" disabled="disabled" />
+    <input type="text" class="tag read" name="tag1" value="<%= post.tags[0] %>" disabled="disabled" />
+    <input type="text" class="tag read" name="tag2" value="<%= post.tags[1] %>" disabled="disabled" />
+    <input type="text" class="tag read" name="tag3" value="<%= post.tags[2] %>" disabled="disabled" />
   </div>
   <div class="label"><label for="content">content</label><textarea rows="5" cols="50" id="content" name="content" placeholder="comment content"><%= post.content %></textarea></div>
   <input type="submit" class="commit" name="commit" value="">

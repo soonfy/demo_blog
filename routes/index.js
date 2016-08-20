@@ -57,7 +57,8 @@ module.exports = function (app) {
               res.redirect('/')
             }else{
               result.forEach(function (post, index) {
-                post.content = markdown.toHTML(post.content)
+                var content = post.content.length > 50? post.content.substring(0, 50) + '... [阅读全文]': post.content
+                post.content = markdown.toHTML(content)
               })
               posts = result
             }
@@ -93,7 +94,8 @@ module.exports = function (app) {
           res.redirect('/')
         }else{
           result.forEach(function (post, index) {
-            post.content = markdown.toHTML(post.content)
+            var content = post.content.length > 50? post.content.substring(0, 50) + '... [阅读全文]': post.content
+            post.content = markdown.toHTML(content)
           })
           posts = result
         }
@@ -282,7 +284,8 @@ module.exports = function (app) {
             res.redirect('/')
           }else{
             result.forEach(function (post, index) {
-              post.content = markdown.toHTML(post.content)
+              var content = post.content.length > 50? post.content.substring(0, 50) + '... [阅读全文]': post.content
+              post.content = markdown.toHTML(content)
             })
             posts = result
             res.render('user', {
@@ -392,7 +395,6 @@ module.exports = function (app) {
         req.flash('error', 'article not exits.')
         res.redirect('/')
       }else{
-        // result.content = markdown.toHTML(result.content)
         post = result
         res.render('edit', {
           title: 'edit',
@@ -538,7 +540,8 @@ module.exports = function (app) {
             res.redirect('/')
           }else{
             result.forEach(function (post, index) {
-              post.content = markdown.toHTML(post.content)
+              var content = post.content.length > 50? post.content.substring(0, 50) + '... [阅读全文]': post.content
+              post.content = markdown.toHTML(content)
             })
             posts = result
             res.render('search', {
