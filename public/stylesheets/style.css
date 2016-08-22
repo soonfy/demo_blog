@@ -121,6 +121,15 @@ div.label label{
 	color:#666666;
 	text-align:left;
 }
+div.label label.error{
+  padding: 10px 0 5px 20px;
+  display: inline-block;
+  width: 300px;
+  height: 14px;
+  font-size:14px;
+	color:#fc6c0d;
+	text-align:left;
+}
 div.status{
   position: fixed;
   margin-left: -10em;
